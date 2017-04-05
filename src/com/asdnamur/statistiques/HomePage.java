@@ -3,6 +3,7 @@ package com.asdnamur.statistiques;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
@@ -13,6 +14,11 @@ public class HomePage extends JFrame {
     JFrame frame = new JFrame();
     JPanel panelAVJ = new JPanel();
     JPanel panelSI = new JPanel();
+
+    Font fButtons = new Font("ARIAL", Font.BOLD, 20);
+    Font fTitle = new Font ("ARIAL", Font.BOLD, 30);
+
+
 
     public HomePage() {
 
@@ -33,7 +39,6 @@ public class HomePage extends JFrame {
         JLabel imageLogo = new JLabel(new ImageIcon(newimg2));
 
         // Bouttons
-        Font fButtons = new Font("ARIAL", Font.BOLD, 20); // Button's Font
         JButton buttonLeft = new JButton("Département AVJ");
         // buttonLeft.setBorderPainted(false); // suppression bordure bouton
         buttonLeft.setBorder(new RoundedBorder(50)); // TODO : Continuer les bords arrondis des boutons
@@ -72,6 +77,29 @@ public class HomePage extends JFrame {
                 System.exit(0);
             }
         });
+        JButton buttonIndicateur = new JButton ("Indicateurs");
+        buttonIndicateur.setForeground(Color.WHITE);
+        buttonIndicateur.setBackground(new Color(225, 165, 50));
+        buttonIndicateur.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Indicateur();
+            }
+        });
+        JButton buttonXLS = new JButton ("Test XLS/XLSX");
+        buttonXLS.setForeground(Color.WHITE);
+        buttonXLS.setBackground(new Color(175, 0, 100));
+        buttonXLS.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new ReadWriteExcelFile().readXLSFile();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
 
         // Contraintes aux boutons, pour qu'ils soient de même largeur
         buttonLeft.setMinimumSize(new Dimension(Math.max(buttonLeft.getMinimumSize().width, buttonRight.getMinimumSize().width),
@@ -100,7 +128,7 @@ public class HomePage extends JFrame {
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(Color.WHITE);
 
-        // je mets le panel avec les boutons dans le panel global
+        // panel avec les boutons dans le panel global
         mainPanel.add(buttonPanel, new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
 
         // la partie au sud du panel global, avec un texte centrés
@@ -122,10 +150,12 @@ public class HomePage extends JFrame {
         mainPanel.add(northPanel, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0));
         // southPanel dans le panel global
         mainPanel.add(southPanel, new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
-        mainPanel.add(buttonClose, new GridBagConstraints(0, 4, 1, 1, 0, 0, GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.NONE, new Insets(10, 10, 0, 0), 0, 0));
+        mainPanel.add(buttonClose, new GridBagConstraints(0, 5, 1, 1, 0, 0, GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.NONE, new Insets(10, 10, 0, 0), 0, 0));
+        mainPanel.add(buttonIndicateur, new GridBagConstraints(0, 3, 1, 1, 0, 0, GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.NONE, new Insets(10, 10, 0, 0), 0, 0));
+        mainPanel.add(buttonXLS, new GridBagConstraints(0, 4, 1, 1, 0, 0, GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.NONE, new Insets(10, 10, 0, 0), 0, 0));
 
 
-        // je met le panel global au centre de la fenêtre
+        // panel global au centre de la fenêtre
         frame.add(mainPanel);
         frame.setSize(1280, 720);
         frame.setLocationRelativeTo(null);
@@ -133,13 +163,13 @@ public class HomePage extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Aide & Soins à Domicile en province de Namur - Statistiques");
 
+        /**************************************************************************************************************/
+
         // Panel Global AVJ
-        panelAVJ.setLayout(new BorderLayout());
+        panelAVJ.setLayout(new GridBagLayout());
         panelAVJ.setBorder(new EmptyBorder(3, 3, 3, 3));
         panelAVJ.setBackground(new Color(120, 190, 60));
 
-        JPanel avjTop = new JPanel();
-        avjTop.setLayout(new BorderLayout());
         JButton buttonBack = new JButton ("\u25C4");
         buttonBack.setSize(100, 100);
         buttonBack.addActionListener(new ActionListener() {
@@ -150,18 +180,17 @@ public class HomePage extends JFrame {
                 frame.revalidate();
             }
         });
-        avjTop.add(buttonBack, BorderLayout.LINE_START);
-        avjTop.setBackground(new Color(120, 190, 60));
+        JLabel titre = new JLabel("STATISTIQUES AVJ");
+        panelAVJ.add(buttonBack, new GridBagConstraints(0, 0, 1, 1, 0, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        panelAVJ.add(titre, new GridBagConstraints(1, 0, 1, 1, 3, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        panelAVJ.add(avjTop, BorderLayout.PAGE_START);
 
+        /**************************************************************************************************************/
         //Panel Global SI
-        panelSI.setLayout(new BorderLayout());
+        panelSI.setLayout(new GridBagLayout());
         panelSI.setBackground(new Color(0, 110, 130));
         panelSI.setBorder(new EmptyBorder(3, 3, 3, 3));
 
-        JPanel siTop = new JPanel();
-        siTop.setLayout(new BorderLayout());
         JButton buttonBack2 = new JButton("\u25C4");
         buttonBack2.addActionListener(new ActionListener() {
             @Override
@@ -171,9 +200,22 @@ public class HomePage extends JFrame {
                 frame.revalidate();
             }
         });
-        siTop.add(buttonBack2, BorderLayout.LINE_START);
-        siTop.setBackground(new Color(0, 110, 130));
+        JLabel titre2 = new JLabel("STATISTIQUES SI");
+        titre2.setFont(fTitle);
+        titre2.setForeground(Color.WHITE);
+        JPanel buttonPanelSI = new JPanel();
+        buttonPanelSI.setLayout(new BoxLayout(buttonPanelSI, BoxLayout.Y_AXIS));
+        buttonPanelSI.setBackground(Color.RED);
+        buttonPanelSI.add(new JButton("Test 1"));
+        buttonPanelSI.add(new JButton("Test 2"));
+        buttonPanelSI.add(new JButton("Test 3"));
+        buttonPanelSI.add(new JButton("Test 4"));
 
-        panelSI.add(siTop, BorderLayout.PAGE_START);
+
+
+        panelSI.add(buttonBack2, new GridBagConstraints(0, 0, 1, 1, 0, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        panelSI.add(titre2, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        panelSI.add(buttonPanelSI, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
     }
 }

@@ -8,5 +8,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="MigLayout" level="project" />
+    <orderEntry type="library" name="curvesapi-1.04" level="project" />
+    <orderEntry type="library" name="poi-3.15" level="project" />
+    <orderEntry type="library" name="curvesapi-1.04 (2)" level="project" />
+    <orderEntry type="library" name="fillo-1.15" level="project" />
   </component>
 </module>
