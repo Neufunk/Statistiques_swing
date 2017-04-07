@@ -1,32 +1,40 @@
 package com.asdnamur.statistiques;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.extractor.ExcelExtractor;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellReference;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.Color;
+import java.awt.Font;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
 
-import org.apache.poi.hssf.util.CellReference;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.Workbook;
 
-/**
- * Created by johnathanv on 5/04/2017.
- */
 public class Indicateur {
 
     JPanel mainPanel = new JPanel(new GridBagLayout());
     JPanel panel = new JPanel();
     JLabel title = new JLabel("Recherche par indicateur");
     JLabel label1 = new JLabel("Indicateurs : ");
-    JComboBox comboIndicateurs = new JComboBox();
+    String[] monthArray = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre", "TOTAL 2017"};
+    Vector indicList = new Vector();
+    JComboBox comboIndicateurs = new JComboBox(indicList);
     JLabel label2 = new JLabel("Période : ");
-    JComboBox comboPeriode = new JComboBox();
+    JComboBox comboPeriode = new JComboBox(monthArray); // Combo avec le Array Mois
     JTextField textBox = new JTextField(20);
 
-    public Indicateur() {
+
+    public Indicateur() throws IOException, InvalidFormatException {
         JFrame frame = new JFrame();
         frame.setTitle("Fenêtre de recherche par indicateurs - v0.1");
         frame.setSize(400, 400);
@@ -43,10 +51,10 @@ public class Indicateur {
         comboIndicateurs.setSize(150, 10);
         comboPeriode.setSize(150, 10);
         textBox.setEditable(false);
-        mainPanel.setBackground(Color.RED);
+        mainPanel.setBackground(new Color(0, 110, 130));
 
-        panel.setBackground(Color.ORANGE);
-        panel.setBorder(new EmptyBorder(100, 100, 100, 100));
+        panel.setBackground(Color.WHITE);
+        panel.setBorder(new EmptyBorder(80, 80, 80, 80));
         panel.add(label1);
         panel.add(comboIndicateurs);
         panel.add(label2);
@@ -56,14 +64,14 @@ public class Indicateur {
         mainPanel.add(title, new GridBagConstraints(0, 0, 1, 1, 0, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         mainPanel.add(textBox, new GridBagConstraints(0, 2, 1, 1, 0, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-        DataFormatter formatter = new DataFormatter();
-        Sheet sheet1 = wb.getSheetAt(0);
-        for (Row row : sheet1) {
-            for (Cell cell : row) {
-                CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
-                System.out.print(cellRef.formatAsString());
-                System.out.print(" - ");
-
-
+        Workbook wb = WorkbookFactory.create(new File("C:/Users/johnathanv/Desktop/Namur 2017.xls"));
+        Sheet sheet902 = wb.getSheetAt(0);
+        Iterator rowIter = sheet902.rowIterator();
+        int row = 5;
+        int cell = 1;
+        while (row < 165){
+            indicList.add(sheet902.getRow(row).getCell(cell).toString());
+            row++;
+        }
     }
 }

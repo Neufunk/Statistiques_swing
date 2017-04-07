@@ -1,5 +1,7 @@
 package com.asdnamur.statistiques;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -83,18 +85,11 @@ public class HomePage extends JFrame {
         buttonIndicateur.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Indicateur();
-            }
-        });
-        JButton buttonXLS = new JButton ("Test XLS/XLSX");
-        buttonXLS.setForeground(Color.WHITE);
-        buttonXLS.setBackground(new Color(175, 0, 100));
-        buttonXLS.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
                 try {
-                    new ReadWriteExcelFile().readXLSFile();
+                    new Indicateur();
                 } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (InvalidFormatException e1) {
                     e1.printStackTrace();
                 }
             }
@@ -150,9 +145,8 @@ public class HomePage extends JFrame {
         mainPanel.add(northPanel, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 5, 0), 0, 0));
         // southPanel dans le panel global
         mainPanel.add(southPanel, new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
-        mainPanel.add(buttonClose, new GridBagConstraints(0, 5, 1, 1, 0, 0, GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.NONE, new Insets(10, 10, 0, 0), 0, 0));
+        mainPanel.add(buttonClose, new GridBagConstraints(0, 4, 1, 1, 0, 0, GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.NONE, new Insets(10, 10, 0, 0), 0, 0));
         mainPanel.add(buttonIndicateur, new GridBagConstraints(0, 3, 1, 1, 0, 0, GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.NONE, new Insets(10, 10, 0, 0), 0, 0));
-        mainPanel.add(buttonXLS, new GridBagConstraints(0, 4, 1, 1, 0, 0, GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.NONE, new Insets(10, 10, 0, 0), 0, 0));
 
 
         // panel global au centre de la fenêtre
