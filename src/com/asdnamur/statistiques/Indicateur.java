@@ -72,6 +72,7 @@ public class Indicateur {
         while (row < 165){
             indicList.add(sheet902.getRow(row).getCell(cell).toString());
             row++;
+
         }
     }
 }
