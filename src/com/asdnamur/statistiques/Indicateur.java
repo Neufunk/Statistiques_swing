@@ -3,10 +3,13 @@ package com.asdnamur.statistiques;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.Color;
 
+import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Workbook;
 
 /**
@@ -53,6 +56,13 @@ public class Indicateur {
         mainPanel.add(title, new GridBagConstraints(0, 0, 1, 1, 0, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
         mainPanel.add(textBox, new GridBagConstraints(0, 2, 1, 1, 0, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
+        DataFormatter formatter = new DataFormatter();
+        Sheet sheet1 = wb.getSheetAt(0);
+        for (Row row : sheet1) {
+            for (Cell cell : row) {
+                CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
+                System.out.print(cellRef.formatAsString());
+                System.out.print(" - ");
 
 
     }
