@@ -6,17 +6,15 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Scanner;
 
 
 public class HomePage extends JFrame {
 
     JFrame frame = new JFrame();
-    JPanel panelAVJ = new JPanel();
-    JPanel panelSI = new JPanel();
 
     Font fButtons = new Font("ARIAL", Font.BOLD, 20);
     Font fTitle = new Font("ARIAL", Font.BOLD, 30);
@@ -148,14 +146,32 @@ public class HomePage extends JFrame {
         mainPanel.add(buttonClose, new GridBagConstraints(0, 4, 1, 1, 0, 0, GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.NONE, new Insets(10, 10, 0, 0), 0, 0));
         mainPanel.add(buttonIndicateur, new GridBagConstraints(0, 3, 1, 1, 0, 0, GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.NONE, new Insets(10, 10, 0, 0), 0, 0));
 
-
         // panel global au centre de la fenêtre
         frame.add(mainPanel);
         frame.setSize(1280, 720);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Aide & Soins à Domicile en province de Namur - Statistiques");
+        frame.setTitle("Aide & Soins à Domicile en province de Namur - Statistiques // alpha 2");
+        Scanner keyboard = new Scanner(System.in); // TODO : A REVOIR
+        buttonPanel.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                KonCode konCode = new KonCode();
+                int key = keyboard.nextInt();
+                konCode.checkKonami(key);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
     }
 }

@@ -44,11 +44,12 @@ public class StatSI {
     public StatSI() {
         // FRAME
         JFrame frame = new JFrame();
-        frame.setTitle("Statistiques SI - beta");
+        frame.setTitle("Statistiques Soins Infirmiers");
         frame.setSize(800, 600);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setContentPane(mainPanel);
+        UIManager.put("TabbedPane.selected", new Color(120, 190, 60));
         tabbedPane1.setOpaque(false);
         tabbedPane1.setUI(new BasicTabbedPaneUI() {
             @Override
@@ -59,8 +60,6 @@ public class StatSI {
                 shadow = Color.BLACK;
                 darkShadow = Color.BLACK;
                 focus = (new Color(120, 190, 60));
-                UIManager.put("TabbedPane.unselectedForeground", Color.WHITE);
-                UIManager.put("TabbedPane.selectedBackground", Color.BLACK);
                 contentBorderInsets = new Insets(0, 0, 0, 0);
             }
         });
@@ -72,25 +71,7 @@ public class StatSI {
         comboCentre.addItem("Ciney");
         comboCentre.addItem("Philippeville");
         comboCentre.addItem("Gedinne");
-        comboCentre.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int centreIndex = comboCentre.getSelectedIndex();
-                if (centreIndex == 0) {
-                    tableName = "CJBNamur2016";
-                } else if (centreIndex == 1) {
-                    tableName = "t961_2016";
-                } else if (centreIndex == 2) {
-                    tableName = "t931_2016";
-                } else if (centreIndex == 3) {
-                    tableName = "t913_2016";
-                } else if (centreIndex == 4) {
-                    tableName = "t902_2016";
-                } else if (centreIndex == 5) {
-                    tableName = "t923_2016";
-                }
-            }
-        });
+
         comboPeriode.addItem("Année Complète");
         comboPeriode.addItem("Janvier");
         comboPeriode.addItem("Février");
@@ -104,39 +85,7 @@ public class StatSI {
         comboPeriode.addItem("Octobre");
         comboPeriode.addItem("Novembre");
         comboPeriode.addItem("Décembre");
-        comboPeriode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int columnLabel = comboPeriode.getSelectedIndex();
-                if (columnLabel == 0) {
-                    selectedChamp = "champ16";
-                } else if (columnLabel == 1) {
-                    selectedChamp = "Champ4";
-                } else if (columnLabel == 2) {
-                    selectedChamp = "Champ5";
-                } else if (columnLabel == 3) {
-                    selectedChamp = "Champ6";
-                } else if (columnLabel == 4) {
-                    selectedChamp = "Champ7";
-                } else if (columnLabel == 5) {
-                    selectedChamp = "Champ8";
-                } else if (columnLabel == 6) {
-                    selectedChamp = "Champ9";
-                } else if (columnLabel == 7) {
-                    selectedChamp = "Champ10";
-                } else if (columnLabel == 8) {
-                    selectedChamp = "Champ11";
-                } else if (columnLabel == 9) {
-                    selectedChamp = "Champ12";
-                } else if (columnLabel == 10) {
-                    selectedChamp = "Champ13";
-                } else if (columnLabel == 11) {
-                    selectedChamp = "Champ14";
-                } else {
-                    selectedChamp = "Champ15";
-                }
-            }
-        });
+
         // INDICATEURS DANS COMBO
         Connection connexion = null;
         try {
@@ -164,8 +113,51 @@ public class StatSI {
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int centreIndex = comboCentre.getSelectedIndex();
+                if (centreIndex == 0) {
+                    tableName = "CJBNamur2016";
+                } else if (centreIndex == 1) {
+                    tableName = "t961_2016";
+                } else if (centreIndex == 2) {
+                    tableName = "t931_2016";
+                } else if (centreIndex == 3) {
+                    tableName = "t913_2016";
+                } else if (centreIndex == 4) {
+                    tableName = "t902_2016";
+                } else if (centreIndex == 5) {
+                    tableName = "t923_2016";
+                }
+                int periodeIndex = comboPeriode.getSelectedIndex();
+                if (periodeIndex == 0) {
+                    selectedChamp = "champ16";
+                } else if (periodeIndex == 1) {
+                    selectedChamp = "Champ4";
+                } else if (periodeIndex == 2) {
+                    selectedChamp = "Champ5";
+                } else if (periodeIndex == 3) {
+                    selectedChamp = "Champ6";
+                } else if (periodeIndex == 4) {
+                    selectedChamp = "Champ7";
+                } else if (periodeIndex == 5) {
+                    selectedChamp = "Champ8";
+                } else if (periodeIndex == 6) {
+                    selectedChamp = "Champ9";
+                } else if (periodeIndex == 7) {
+                    selectedChamp = "Champ10";
+                } else if (periodeIndex == 8) {
+                    selectedChamp = "Champ11";
+                } else if (periodeIndex == 9) {
+                    selectedChamp = "Champ12";
+                } else if (periodeIndex == 10) {
+                    selectedChamp = "Champ13";
+                } else if (periodeIndex == 11) {
+                    selectedChamp = "Champ14";
+                } else {
+                    selectedChamp = "Champ15";
+                }
                 System.out.println(selectedChamp);
                 System.out.println(tableName);
+
                 JOptionPane.showMessageDialog(frame, "TABLE : " + tableName + " & CHAMP : " + selectedChamp);
 
             }

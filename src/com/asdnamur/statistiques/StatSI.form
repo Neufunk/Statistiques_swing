@@ -19,6 +19,9 @@
         <properties>
           <background color="-7302247"/>
           <foreground color="-1"/>
+          <inheritsPopupMenu value="false"/>
+          <opaque value="true"/>
+          <requestFocusEnabled value="false"/>
           <visible value="true"/>
         </properties>
         <border type="none">
