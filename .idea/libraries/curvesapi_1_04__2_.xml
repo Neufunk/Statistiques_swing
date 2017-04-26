@@ -19,6 +19,7 @@
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/lib/miglayout-core-sources.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/miglayout-swing-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-3.15.jar!/" />
     </SOURCES>
   </library>
 </component>

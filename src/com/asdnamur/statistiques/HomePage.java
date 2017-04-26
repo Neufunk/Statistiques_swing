@@ -1,14 +1,15 @@
 package com.asdnamur.statistiques;
 
+import com.sun.deploy.ui.ImageLoader;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicArrowButton;
+import java.io.InputStream;
 
 
 public class HomePage extends JFrame {
@@ -18,23 +19,27 @@ public class HomePage extends JFrame {
     JPanel panelSI = new JPanel();
 
     Font fButtons = new Font("ARIAL", Font.BOLD, 20);
-    Font fTitle = new Font ("ARIAL", Font.BOLD, 30);
+    Font fTitle = new Font("ARIAL", Font.BOLD, 30);
 
 
-
-    public HomePage() {
+    public HomePage() throws IOException {
 
         // un panneau pour la partie bouton plus image au centre
         JPanel buttonPanel = new JPanel(new GridBagLayout());
+        buttonPanel.setBackground(Color.WHITE);
 
         // Images + Resize
-        ImageIcon imageIcon = new ImageIcon("./res/graphique.png"); // load the image to a imageIcon
+        InputStream graphiqueURL = getClass().getResourceAsStream("/resources/graphique.png");
+        Image graphique = ImageIO.read(graphiqueURL);
+        ImageIcon imageIcon = new ImageIcon((graphique)); // load the image to an imageIcon
         Image image = imageIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(120, 120, Image.SCALE_SMOOTH); // scale it the smooth way
         imageIcon = new ImageIcon(newimg);  // transform it back
         JLabel imageCenter = new JLabel(new ImageIcon(newimg));
 
-        ImageIcon imageIcon2 = new ImageIcon("./res/ASD_logo.jpg"); // load the image to a imageIcon
+        InputStream logoURL = getClass().getResourceAsStream("/resources/ASD_logo.jpg");
+        Image logo = ImageIO.read(logoURL);
+        ImageIcon imageIcon2 = new ImageIcon(logo); // load the image to an imageIcon
         Image image2 = imageIcon2.getImage(); // transform it
         Image newimg2 = image2.getScaledInstance(300, 120, Image.SCALE_SMOOTH); // scale it the smooth way
         imageIcon = new ImageIcon(newimg2);  // transform it back
@@ -42,36 +47,31 @@ public class HomePage extends JFrame {
 
         // Bouttons
         JButton buttonLeft = new JButton("Département AVJ");
-        // buttonLeft.setBorderPainted(false); // suppression bordure bouton
-        buttonLeft.setBorder(new RoundedBorder(50)); // TODO : Continuer les bords arrondis des boutons
         buttonLeft.setBackground(new Color(120, 190, 60));
         buttonLeft.setForeground(Color.WHITE);
+        buttonLeft.setFont(fButtons);
+        buttonLeft.setFocusPainted(false);
         buttonLeft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent click) {
-                frame.setContentPane(panelAVJ);
-                frame.setTitle("Statistiques AVJ");
-                frame.revalidate();
+                JOptionPane.showMessageDialog(frame, "The world could always use more heroes.");
             }
         });
 
         JButton buttonRight = new JButton("Département SI");
-        // buttonRight.setBorderPainted(false);
         buttonRight.setBackground(new Color(0, 110, 130));
         buttonRight.setForeground(Color.WHITE);
-        buttonLeft.setFont(fButtons);
         buttonRight.setFont(fButtons);
+        buttonRight.setFocusPainted(false);
         buttonRight.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent click) {
-                frame.setContentPane(panelSI);
-                frame.setTitle("Statistiques SI");
-                frame.revalidate();
+                new StatSI();
             }
         });
 
-        JButton buttonClose = new JButton ("Fermer");
-        buttonClose.setBackground(Color.RED);
+        JButton buttonClose = new JButton("Fermer");
+        buttonClose.setBackground(new Color(232, 79, 68));
         buttonClose.setForeground(Color.WHITE);
         buttonClose.addActionListener(new ActionListener() {
             @Override
@@ -79,8 +79,9 @@ public class HomePage extends JFrame {
                 System.exit(0);
             }
         });
-        JButton buttonIndicateur = new JButton ("Indicateurs");
+        JButton buttonIndicateur = new JButton("Indicateurs");
         buttonIndicateur.setForeground(Color.WHITE);
+        buttonIndicateur.setVisible(false);
         buttonIndicateur.setBackground(new Color(225, 165, 50));
         buttonIndicateur.addActionListener(new ActionListener() {
             @Override
@@ -94,7 +95,6 @@ public class HomePage extends JFrame {
                 }
             }
         });
-
 
         // Contraintes aux boutons, pour qu'ils soient de même largeur
         buttonLeft.setMinimumSize(new Dimension(Math.max(buttonLeft.getMinimumSize().width, buttonRight.getMinimumSize().width),
@@ -156,60 +156,6 @@ public class HomePage extends JFrame {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Aide & Soins à Domicile en province de Namur - Statistiques");
-
-        /**************************************************************************************************************/
-
-        // Panel Global AVJ
-        panelAVJ.setLayout(new GridBagLayout());
-        panelAVJ.setBorder(new EmptyBorder(3, 3, 3, 3));
-        panelAVJ.setBackground(new Color(120, 190, 60));
-
-        JButton buttonBack = new JButton ("\u25C4");
-        buttonBack.setSize(100, 100);
-        buttonBack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent click) {
-                frame.setContentPane(mainPanel);
-                frame.setTitle("Aide & Soins à Domicile en province de Namur - Statistiques");
-                frame.revalidate();
-            }
-        });
-        JLabel titre = new JLabel("STATISTIQUES AVJ");
-        panelAVJ.add(buttonBack, new GridBagConstraints(0, 0, 1, 1, 0, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        panelAVJ.add(titre, new GridBagConstraints(1, 0, 1, 1, 3, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
-
-        /**************************************************************************************************************/
-        //Panel Global SI
-        panelSI.setLayout(new GridBagLayout());
-        panelSI.setBackground(new Color(0, 110, 130));
-        panelSI.setBorder(new EmptyBorder(3, 3, 3, 3));
-
-        JButton buttonBack2 = new JButton("\u25C4");
-        buttonBack2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent click) {
-                frame.setContentPane(mainPanel);
-                frame.setTitle("Aide & Soins à Domicile en province de Namur - Statistiques");
-                frame.revalidate();
-            }
-        });
-        JLabel titre2 = new JLabel("STATISTIQUES SI");
-        titre2.setFont(fTitle);
-        titre2.setForeground(Color.WHITE);
-        JPanel buttonPanelSI = new JPanel();
-        buttonPanelSI.setLayout(new BoxLayout(buttonPanelSI, BoxLayout.Y_AXIS));
-        buttonPanelSI.setBackground(Color.RED);
-        buttonPanelSI.add(new JButton("Test 1"));
-        buttonPanelSI.add(new JButton("Test 2"));
-        buttonPanelSI.add(new JButton("Test 3"));
-        buttonPanelSI.add(new JButton("Test 4"));
-
-
-
-        panelSI.add(buttonBack2, new GridBagConstraints(0, 0, 1, 1, 0, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        panelSI.add(titre2, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        panelSI.add(buttonPanelSI, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
     }
 }
