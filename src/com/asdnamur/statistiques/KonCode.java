@@ -14,7 +14,7 @@ public class KonCode {
         graph = generateSequenceMap(code);
 
         //Call checkKonami(key) whenever a key is pressed
-        //TRALALALALA
+        //OK TO MASTER
     }
 
 
